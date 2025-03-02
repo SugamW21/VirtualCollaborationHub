@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Cache;
 
 class ProfileController extends Controller
 {
@@ -67,20 +68,33 @@ class ProfileController extends Controller
      * Delete the user's account.
      */
     public function destroy(Request $request): RedirectResponse
-    {
-        $request->validateWithBag('userDeletion', [
-            'password' => ['required', 'current_password'],
-        ]);
+{
+    $request->validateWithBag('userDeletion', [
+        'password' => ['required', 'current_password'],
+    ]);
 
-        $user = $request->user();
+    $user = $request->user();
 
-        Auth::logout();
+    // Decrease the active session count
+    // Remove the user's session from the global active session list in the cache
+    $activeSessions = Cache::get('active_sessions', []);
+    unset($activeSessions[$user->id]);
+    Cache::put('active_sessions', $activeSessions, now()->addMinutes(30)); // Update the global active sessions list
 
-        $user->delete();
+    // Remove the user's specific active session key from the cache
+    Cache::forget('active_session_' . $user->id);
 
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
+    // Logout the user
+    Auth::logout();
 
-        return Redirect::to('/');
-    }
+    // Delete the user's account
+    $user->delete();
+
+    // Invalidate the session and regenerate CSRF token
+    $request->session()->invalidate();
+    $request->session()->regenerateToken();
+
+    return Redirect::to('/');
+}
+
 }

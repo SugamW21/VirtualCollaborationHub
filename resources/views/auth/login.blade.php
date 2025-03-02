@@ -47,15 +47,23 @@
 </x-guest-layout>
  --}}
  <x-guest-layout>
+    <head>
+        <link rel="icon" href="/images/logo.png" type="image/x-icon">
+        <title>Virtual Collaboration Hub</title>
+    </head>
     <!-- Full Screen Background -->
     <div class="flex items-center justify-center min-h-screen relative overflow-hidden">
-        <!-- Background Image with Blur -->
-        <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('images/logback.jpg'); filter: blur(8px);"></div>
+        <!-- Background Video -->
+        <video autoplay loop muted class="absolute inset-0 w-full h-full" style="object-fit: cover;">
+            <source src="videos/Logreg.mp4" type="video/mp4">
+            <!-- Add fallback sources in case mp4 is not supported -->
+            <source src="videos/Logreg.webm" type="video/webm">
+        </video>
         <div class="absolute inset-0 bg-black opacity-30"></div> <!-- Optional dark overlay for better contrast -->
 
         <!-- Go Back Button -->
         <div class="absolute top-4 left-4 z-10">
-            <a href="javascript:history.back()" class="px-6 py-3 bg-red-600 text-white rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500">
+            <a href="{{ route('home') }}" class="px-6 py-3 bg-red-600 text-white rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500">
                 Go Back
             </a>
         </div>

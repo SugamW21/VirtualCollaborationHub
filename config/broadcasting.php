@@ -15,7 +15,9 @@ return [
     |
     */
 
-    'default' => env('BROADCAST_DRIVER', 'null'),
+    // 'default' => env('BROADCAST_DRIVER', 'null'),
+    'default' => env('BROADCAST_DRIVER', 'pusher'),
+
 
     /*
     |--------------------------------------------------------------------------
@@ -36,7 +38,7 @@ return [
                 'app_id' => env('PUSHER_APP_ID'),
                 'options' => [
                     'cluster' => env('PUSHER_APP_CLUSTER'),
-                    'encrypted' => true,
+                    // 'encrypted' => true,
                     'useTLS' => true,
                     'host' => '127.0.0.1', // Localhost for Laravel WebSockets
                     'port' => 6001, // Ensure this matches your WebSocket server

@@ -21,9 +21,40 @@ Broadcast::channel('status-update', function($user){
     return $user;
 });    
 
-Broadcast::channel('broadcast-message', function($user){
+// Broadcast::channel('broadcast-message', function($user){
+//     return $user;
+// });
+
+Broadcast::channel('broadcast-message', function ($user) {
+    \Log::info('User joining channel: ', [$user->id]);  // Check if user is able to join the channel
+    return $user;  // Ensure that the user is correctly authorized
+});
+
+
+
+
+ Broadcast::channel('message-deleted', function($user){
+     return $user;
+ });
+
+ Broadcast::channel('message-updated', function($user){
     return $user;
 });
+
+Broadcast::channel('broadcast-group-message', function($user){
+    return $user;
+});
+
+Broadcast::channel('group-message-deleted', function($user){
+    return $user;
+});
+Broadcast::channel('group-message-updated', function($user){
+    return $user;
+});
+
+
+
+
 
 
 

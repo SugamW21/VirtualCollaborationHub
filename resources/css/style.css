@@ -1,34 +1,93 @@
-.user-image{
+.user-image {
     width: 50px;
-    width: 50px;
-    display: inline;
-}
-.cursor-pointer{
-    cursor: pointer;
-}
-.chat-section{
-    display: none;
-}
-#chat-container{
-    background-color: lightblue;
-    width: 100%;
-    height: 400px;
-    overflow-y: scroll;
-    
-}
-.border{
-    width: 88%;
-}
-.btn-primary{
-    background-color: red;
-    color: white;
-}
-.offline-status{
-    color: red;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
 }
 
-.online-status{
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.chat-section {
+    background: #ffffff;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+    margin: auto;
+    border: 2px solid #ddd;
+    display: none;
+}
+
+    .selected-user-info {
+        display: flex;
+        align-items: center;
+        background: #eef2f3;
+        padding: 10px;
+        border-radius: 8px;
+        margin-bottom: 10px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    
+    .selected-user-image {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid #4a90e2;
+    }
+    
+
+#chat-container {
+    background-color: #F3F4F6; /* Light Gray */
+    width: 100%;
+    height: 400px;
+    overflow-y: auto;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    border: 2px solid #E5E7EB;
+}
+
+/* Custom scrollbar */
+#chat-container::-webkit-scrollbar {
+    width: 6px;
+}
+#chat-container::-webkit-scrollbar-track {
+    background: #E5E7EB;
+    border-radius: 10px;
+}
+#chat-container::-webkit-scrollbar-thumb {
+    background: #4A90E2;
+    border-radius: 10px;
+}
+
+.border {
+    width: 84%;
+}
+
+.btn-primary {
+    background-color: #4A90E2;
+    color: white;
+    font-weight: bold;
+    padding: 8px 12px;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #357ABD;
+}
+
+.offline-status {
+    color: red;
+    font-weight: bold;
+}
+
+.online-status {
     color: green;
+    font-weight: bold;
 }
 
 .current-user-chat{
@@ -41,10 +100,10 @@
     margin: 10px;
     color: black;
 }
-.current-user-chat h4{
+.current-user-chat h1{
     font-size: 20px;
 }
-.distance-user-chat h4{
+.distance-user-chat h1{
     font-size: 20px;
 }
 #message{
@@ -72,17 +131,38 @@
 }
 
 .group-chat-section{
+    background: #ffffff;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+    margin: auto;
+    border: 2px solid #ddd;
     display: none;
 }
-#group-chat-container{
-    background-color: lightblue;
+#group-chat-container {
+    background-color: #F3F4F6;
     width: 100%;
     height: 400px;
-    overflow-y: scroll;
-    
+    overflow-y: auto;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    border: 2px solid #E5E7EB;
 }
 
-
+/* Custom scrollbar */
+#group-chat-container::-webkit-scrollbar {
+    width: 6px;
+}
+#group-chat-container::-webkit-scrollbar-track {
+    background: #E5E7EB;
+    border-radius: 10px;
+}
+#group-chat-container::-webkit-scrollbar-thumb {
+    background: #4A90E2;
+    border-radius: 10px;
+}
 
 
 
@@ -115,3 +195,19 @@ member css */
 .fa-trash{
     color: red;
 }
+.fa-edit{
+    color: blue;
+}
+
+.user-data{
+    font-size: 12px;
+}
+.user-chat-image{
+    width: 25px;
+    border: 1px solid red;
+    height: 25px;
+    display: inline-block;
+    border-radius: 100%;
+}
+
+

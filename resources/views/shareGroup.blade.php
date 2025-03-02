@@ -1,6 +1,9 @@
 <x-app-layout>
     
-        
+        <head>
+            <link rel="icon" href="images/logo.png" type="image/x-icon">
+            <title>Virtual Collaboration Hub</title>
+        </head>
     <div class="container mt-4">
 
         <img src="/{{$groupData->image}}" width="200px" height="200px" alt="">

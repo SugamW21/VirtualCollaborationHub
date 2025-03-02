@@ -23,6 +23,7 @@ class MessageEvent implements ShouldBroadcast
     {
         //
         $this->chatData = $chatData;
+        \Log::info('Broadcasting Chat Message: ', ['sender_id' => $chatData->sender_id, 'receiver_id' => $chatData->receiver_id]);
     }
 
     /**
@@ -37,6 +38,7 @@ class MessageEvent implements ShouldBroadcast
          
      }
 
+    
      public function broadcastAS()
      {
         return 'getChatMessage';

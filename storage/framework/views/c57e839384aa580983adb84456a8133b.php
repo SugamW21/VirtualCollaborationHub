@@ -1,0 +1,1 @@
+<h1>404 Not Found!</h1><?php /**PATH C:\laragon\www\VirtualCollaborationHub\resources\views/404.blade.php ENDPATH**/ ?>

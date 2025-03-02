@@ -2,7 +2,11 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\TaskController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\RatingFeedbackController;
+use App\Http\Controllers\MeetingController;
 
 
 /*
@@ -16,9 +20,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Route::get('/', function () {
+//     return view('welcome');
+// })->name('home');
+// Route for the opening video
 Route::get('/', function () {
-    return view('welcome');
-});
+    return view('video'); // Opening video page
+})->name('video');
+
+// Route for the landing page
+Route::get('/welcome', function () {
+    return view('welcome'); // Landing page
+})->name('home');
 
 Route::get('/dashboard', [UserController::class, 'loadDashboard'])
     ->middleware(['auth', 'verified'])
@@ -31,6 +44,16 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__ . '/auth.php';
+require __DIR__ . '/admin-auth.php';
+
+Route::post('/save-chat',[UserController::class, 'saveChat']);
+Route::post('/load-chats',[UserController::class, 'loadChats']);
+
+Route::post('/delete-chat',[UserController::class, 'deleteChat']);
+Route::post('/update-chat',[UserController::class, 'updateChat']);
+
+
+
 
 //group routes
 Route::get('/groups', [UserController::class, 'loadGroups'])
@@ -69,12 +92,92 @@ Route::get('/groups', [UserController::class, 'loadGroups'])
     Route::get('/group-chats', [UserController::class, 'groupChats'])
     ->middleware(['auth', 'verified'])
     ->name('groupChats');
+
+    Route::post('/save-group-chat',[UserController::class, 'saveGroupChat']);
+    
+    Route::post('/load-group-chats',[UserController::class, 'loadGroupChats']);
+
+    Route::post('/delete-group-chat',[UserController::class, 'deleteGroupChat']);
+
+    Route::post('/update-group-chat',[UserController::class, 'updateGroupChat']);
+    
+    
+
+
+    // Route::get('/task', [TaskController::class, 'loadtasks'])
+    // ->middleware(['auth', 'verified'])
+    // ->name('task');
+    
+    // Route::get('/task/create', [TaskController::class, 'create'])
+    // ->middleware(['auth', 'verified'])
+    // ->name('task.create');
+
+    // Route::get('/task/create', [TaskController::class, 'store'])
+    // ->middleware(['auth', 'verified'])
+    // ->name('task.store');
+
+    Route::get('/tasks', [TaskController::class, 'loadtasks'])
+    ->middleware(['auth', 'verified'])
+    ->name('tasks.index'); // Change to 'tasks.index' // This route is named 'task'
+
+Route::get('/task/create', [TaskController::class, 'create'])
+    ->middleware(['auth', 'verified'])
+    ->name('task.create');
+
+Route::post('/task', [TaskController::class, 'store'])
+    ->middleware(['auth', 'verified'])
+    ->name('task.store');
+
+    Route::get('/task/{task}', [TaskController::class, 'edit'])
+    ->middleware(['auth', 'verified'])
+    ->name('tasks.edit');
+
+    Route::put('/task/{task}', [TaskController::class, 'update'])
+    ->middleware(['auth', 'verified'])
+    ->name('tasks.update');
+
+    Route::delete('/task/{task}', [TaskController::class, 'destroy'])
+    ->middleware(['auth', 'verified'])
+    ->name('tasks.destroy');
+
+
+
+    Route::post('/tasks/{task}/complete', [TaskController::class, 'complete'])->name('tasks.complete');
+
+
+    Route::get('/taskshow', [TaskController::class, 'showComplete'])
+    ->middleware(['auth', 'verified'])
+    ->name('taskshow'); // Corrected this line
+
+    Route::get('/admin/dashboard', [AdminController::class, 'loadDashboard'])->name('admin.dashboard');
+
+
+    // Route to show the edit form (GET method)
+Route::get('/admin/users/{user}/edit', [AdminController::class, 'edit'])->name('users.edit');
+
+// Define the route for the update action
+Route::put('/admin/users/{user}', [AdminController::class, 'update'])->name('users.update');
+
+Route::delete('/admin/users/{id}', [AdminController::class, 'destroy'])->name('users.destroy');
     
 
     
-       
 
-Route::post('/save-chat',[UserController::class, 'saveChat']);
+    Route::post('/submit-feedback', [RatingFeedbackController::class, 'submitFeedback'])->name('submit-feedback');
+    Route::get('/admin/feedbacks', [RatingFeedbackController::class, 'showFeedback'])->name('admin.feedbacks');
 
 
+
+
+
+    Route::get('/meetings', [MeetingController::class, 'loadMeeting'])
+    ->middleware(['auth', 'verified'])
+    ->name('meetings.meeting');
+
+    Route::get('/create-meeting', [MeetingController::class, 'generateMeeting']);
+
+
+
+    
+    
 

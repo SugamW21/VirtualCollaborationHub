@@ -2,8 +2,12 @@
     {{-- <div class="flex items-center justify-center min-h-screen relative overflow-hidden">
         <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('images/dashboard.jpg'); filter: blur(8px);"></div>
         <div class="absolute inset-0 bg-black opacity-30"></div> --}}
-        
-    <div class="container mt-4"> 
+        <head>
+          <link rel="icon" href="images/logo.png" type="image/x-icon">
+          <title>Virtual Collaboration Hub</title>
+      </head>    
+    
+        <div class="container mt-4"> 
         <h1 style="font-size:50px">Groups</h1>
         
         <!-- Button trigger modal -->
