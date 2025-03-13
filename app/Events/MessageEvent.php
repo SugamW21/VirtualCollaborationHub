@@ -34,7 +34,12 @@ class MessageEvent implements ShouldBroadcast
 
      public function broadcastWith(): array
      {
-        return ['chat' => $this->chatData];
+        return ['chat' => $this->chatData,
+        'notification' => [
+            'message' => "{$this->chatData->senderData->name} sent a message to you ",
+            'sender_id' => $this->chatData->sender_id,
+            'receiver_id' => $this->chatData->receiver_id
+        ]];
          
      }
 

@@ -8,6 +8,30 @@
 .cursor-pointer {
     cursor: pointer;
 }
+.notification-area {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+}
+
+.notification {
+    background: #ffcc00;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.close-notification {
+    background: none;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+}
 
 .chat-section {
     background: #ffffff;
@@ -90,7 +114,7 @@
     font-weight: bold;
 }
 
-.current-user-chat{
+/* .current-user-chat{
     text-align: right;
     margin: 10px;
     color: black;
@@ -99,7 +123,27 @@
     text-align: left;
     margin: 10px;
     color: black;
+} */
+
+.current-user-chat {
+    text-align: right;
+    margin: 10px;
+    color: black;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end; /* Ensures content inside aligns to the right */
 }
+
+.distance-user-chat {
+    text-align: left;
+    margin: 10px;
+    color: black;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Ensures content inside aligns to the left */
+}
+
+
 .current-user-chat h1{
     font-size: 20px;
 }
@@ -109,6 +153,20 @@
 #message{
     margin-top: 10px;
     border: 3px black solid !important;
+}
+
+.chat-attachment {
+    max-width: 150px;
+    max-height: 150px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 5px;
+}
+
+.chat-attachment-link {
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
 }
 
 .start-head {
@@ -126,6 +184,25 @@
 }
 
 .start-head:hover {
+    transform: scale(1.05); /* Slightly enlarge on hover */
+    background-color: rgba(255, 255, 255, 1); /* Change background on hover */
+}
+
+.group-start-head{
+    font-size: 2.5rem; /* Large font size */
+    font-weight: bold; /* Bold text */
+    color: #4A90E2; /* Custom color */
+    text-align: center; /* Centered text */
+    padding: 20px; /* Padding around the text */
+    margin: 0; /* Remove default margin */
+    background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent background */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Soft shadow */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: transform 0.3s, background-color 0.3s; /* Smooth transitions */
+}
+
+.group-start-head:hover {
     transform: scale(1.05); /* Slightly enlarge on hover */
     background-color: rgba(255, 255, 255, 1); /* Change background on hover */
 }

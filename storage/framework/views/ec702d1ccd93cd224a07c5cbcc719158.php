@@ -60,6 +60,7 @@
           }
         </script>
       </head>
+      <div id="notification-container" class="notification-area"></div>
       <body>
         <button id="meeting-button" onclick="startMeeting()">Create Meeting</button>
         <div id="jaas-container"></div>

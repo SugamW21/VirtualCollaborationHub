@@ -74,54 +74,79 @@ $(document).ready(function() {
     //     });
     // });
     $('#chat-form').submit(function(e) {
-        e.preventDefault();
-        
-        var formData = new FormData(this); // Create a FormData object from the form
-        formData.append('sender_id', sender_id);
-        formData.append('receiver_id', receiver_id);
-    
-        $.ajax({
-            url: "/save-chat",
-            type: "POST",
-            data: formData,
-            contentType: false,
-            processData: false,
-            success: function(res) {
-                if(res.success) {
-                    $('#message').val('');
-                    $('#attachment').val(''); // Reset the attachment input
-                    let chat = res.data;
-                    let userImage = (chat.sender_data.image == null) ? 'images/dummy.png' : chat.sender_data.image;
-                    let userName = chat.sender_data.name;
-    
-                    let date = new Date(chat.created_at);
-                    let cDateTime = date.getDate() + '-' + (date.getMonth() + 1) + '-' + date.getFullYear() + 
-                                    ' ' + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
-    
-                    let html = `
-                    <div class="current-user-chat" id='${chat.id}-chat'>
-                        <h1>
-                            <span>${chat.message}</span>${chat.attachment ? `<a href="/storage/${chat.attachment}" target="_blank"><b style="color:blue">View Attachment</b></a>` : ''}
+    e.preventDefault();
 
-                            <i class="fa fa-trash" aria-hidden="true" data-id='${chat.id}' data-toggle="modal" data-target="#deleteChatModal"></i>
-                            <i class="fa fa-edit" aria-hidden="true" data-id='${chat.id}' data-msg='${chat.message}' data-toggle="modal" data-target="#updateChatModal"></i>
-                        </h1>
-                        <div class="user-data">
-                            <img src="${userImage}" class="user-chat-image" />
-                            <b>Me</b>
-                            ${cDateTime}
-                        </div>
-                    </div>
-                    `;
-    
-                    $('#chat-container').append(html);
-                    scrollChat();
-                } else {
-                    alert(res.msg);
+    var formData = new FormData(this); // Create a FormData object from the form
+    formData.append('sender_id', sender_id);
+    formData.append('receiver_id', receiver_id);
+
+    $.ajax({
+        url: "/save-chat",
+        type: "POST",
+        data: formData,
+        contentType: false,
+        processData: false,
+        success: function(res) {
+            if (res.success) {
+                $('#message').val('');
+                $('#attachment').val(''); // Reset the attachment input
+                let chat = res.data;
+                let userImage = (chat.sender_data.image == null) ? 'images/dummy.png' : chat.sender_data.image;
+                let userName = chat.sender_data.name;
+
+                let date = new Date(chat.created_at);
+                let cDateTime = date.getDate() + '-' + (date.getMonth() + 1) + '-' + date.getFullYear() + 
+                                ' ' + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
+
+                let attachmentHtml = '';
+                if (chat.attachment) {
+                    let filePath = `/storage/${chat.attachment}`;
+                    let fileExtension = chat.attachment.split('.').pop().toLowerCase();
+
+                    // Check if the file is an image
+                    if (['jpg', 'jpeg', 'png', 'gif'].includes(fileExtension)) {
+                        attachmentHtml = `<a href="${filePath}" target="_blank">
+                                            <img src="${filePath}" class="chat-attachment" alt="image" />
+                                          </a>`;
+                    }
+                    // Check if the file is a video
+                    else if (['mp4', 'webm', 'ogg'].includes(fileExtension)) {
+                        attachmentHtml = `<a href="${filePath}" target="_blank">
+                                            <video class="chat-attachment" controls>
+                                                <source src="${filePath}" type="video/${fileExtension}">
+                                                Your browser does not support the video tag.
+                                            </video>
+                                          </a>`;
+                    }
+                    else {
+                        attachmentHtml = `<a href="${filePath}" target="_blank"><b style="color:blue">View Attachment</b></a>`;
+                    }
                 }
+
+                let html = `
+                <div class="current-user-chat" id='${chat.id}-chat'>
+                    <h1>
+                        <span>${chat.message}</span>
+                        ${attachmentHtml}
+                        <i class="fa fa-trash" aria-hidden="true" data-id='${chat.id}' data-toggle="modal" data-target="#deleteChatModal"></i>
+                        <i class="fa fa-edit" aria-hidden="true" data-id='${chat.id}' data-msg='${chat.message}' data-toggle="modal" data-target="#updateChatModal"></i>
+                    </h1>
+                    <div class="user-data">
+                        <img src="${userImage}" class="user-chat-image" />
+                        <b>Me</b>
+                        ${cDateTime}
+                    </div>
+                </div>
+                `;
+
+                $('#chat-container').append(html);
+                scrollChat();
+            } else {
+                alert(res.msg);
             }
-        });
+        }
     });
+});
     
     
 
@@ -215,11 +240,11 @@ function loadOldChats() {
         type: "POST",
         data: { sender_id: sender_id, receiver_id: receiver_id },
         success: function(res) {
-            if(res.success) {
+            if (res.success) {
                 let chats = res.data;
                 let html = '';
 
-                for(let i = 0; i < chats.length; i++) {
+                for (let i = 0; i < chats.length; i++) {
                     let chat = chats[i];
                     let addClass = (chat.sender_id == sender_id) ? 'current-user-chat' : 'distance-user-chat';
                     let userImage = (chat.sender_data.image == null) ? 'images/dummy.png' : chat.sender_data.image;
@@ -229,28 +254,47 @@ function loadOldChats() {
                     let cDateTime = date.getDate() + '-' + (date.getMonth() + 1) + '-' + date.getFullYear() + 
                                     ' ' + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
 
+                    let attachmentHtml = '';
+                    if (chat.attachment) {
+                        let filePath = `/storage/${chat.attachment}`;
+                        let fileExtension = chat.attachment.split('.').pop().toLowerCase();
+
+                        // Check if the file is an image
+                        if (['jpg', 'jpeg', 'png', 'gif'].includes(fileExtension)) {
+                            attachmentHtml = `<a href="${filePath}" target="_blank">
+                                                <img src="${filePath}" class="chat-attachment" alt="image" />
+                                              </a>`;
+                        }
+                        // Check if the file is a video
+                        else if (['mp4', 'webm', 'ogg'].includes(fileExtension)) {
+                            attachmentHtml = `<a href="${filePath}" target="_blank">
+                                                <video class="chat-attachment" controls>
+                                                    <source src="${filePath}" type="video/${fileExtension}">
+                                                    Your browser does not support the video tag.
+                                                </video>
+                                              </a>`;
+                        }
+                        else {
+                            attachmentHtml = `<a href="${filePath}" target="_blank"><b style="color:blue">View Attachment</b></a>`;
+                        }
+                    }
+
                     html += `
                     <div class="${addClass}" id='${chat.id}-chat'>
                         <h1>
                             <span>${chat.message}</span>
-                            ${chat.attachment ? `<a href="/storage/${chat.attachment}" target="_blank"><b style="color:blue">View Attachment</b></a>` : ''}
-                    `;
-
-                    // Show edit and delete buttons for the sender only
-                    if (chat.sender_id == sender_id) {
-                        html += `
-                        <i class="fa fa-trash" aria-hidden="true" data-id="${chat.id}" data-toggle="modal" data-target="#deleteChatModal"></i>
-                        <i class="fa fa-edit" aria-hidden="true" data-id="${chat.id}" data-msg="${chat.message}" data-toggle="modal" data-target="#updateChatModal"></i>`;
-                    }
-
-                    html += `
+                            ${attachmentHtml}
+                            ${chat.sender_id == sender_id ? `
+                            <i class="fa fa-trash" aria-hidden="true" data-id="${chat.id}" data-toggle="modal" data-target="#deleteChatModal"></i>
+                            <i class="fa fa-edit" aria-hidden="true" data-id="${chat.id}" data-msg="${chat.message}" data-toggle="modal" data-target="#updateChatModal"></i>` : ''}
                         </h1>
                         <div class="user-data">
                             <img src="${userImage}" class="user-chat-image" />
                             <b>${chat.sender_id == sender_id ? "Me" : userName}</b>
                             ${cDateTime}
                         </div>
-                    </div>`;
+                    </div>
+                    `;
                 }
 
                 $('#chat-container').append(html);
@@ -330,7 +374,7 @@ Echo.join('status-update')
 //     });
 Echo.private('broadcast-message')
     .listen('.getChatMessage', (data) => {
-        if(sender_id == data.chat.receiver_id && receiver_id == data.chat.sender_id) {
+        if (sender_id == data.chat.receiver_id && receiver_id == data.chat.sender_id) {
             let chat = data.chat;
             let userImage = (chat.sender_data.image == null) ? 'images/dummy.png' : chat.sender_data.image;
             let userName = chat.sender_data.name;
@@ -339,11 +383,36 @@ Echo.private('broadcast-message')
             let cDateTime = date.getDate() + '-' + (date.getMonth() + 1) + '-' + date.getFullYear() + 
                             ' ' + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
 
+            let attachmentHtml = '';
+            if (chat.attachment) {
+                let filePath = `/storage/${chat.attachment}`;
+                let fileExtension = chat.attachment.split('.').pop().toLowerCase();
+
+                // Check if the file is an image
+                if (['jpg', 'jpeg', 'png', 'gif'].includes(fileExtension)) {
+                    attachmentHtml = `<a href="${filePath}" target="_blank">
+                                        <img src="${filePath}" class="chat-attachment" alt="image" />
+                                      </a>`;
+                }
+                // Check if the file is a video
+                else if (['mp4', 'webm', 'ogg'].includes(fileExtension)) {
+                    attachmentHtml = `<a href="${filePath}" target="_blank">
+                                        <video class="chat-attachment" controls>
+                                            <source src="${filePath}" type="video/${fileExtension}">
+                                            Your browser does not support the video tag.
+                                        </video>
+                                      </a>`;
+                }
+                else {
+                    attachmentHtml = `<a href="${filePath}" target="_blank"><b style="color:blue">View Attachment</b></a>`;
+                }
+            }
+
             let html = `
             <div class="distance-user-chat" id="${chat.id}-chat">
                 <h1>
                     <span>${chat.message}</span>
-                    ${chat.attachment ? `<a href="/storage/${chat.attachment}" target="_blank"><b style="color:blue">View Attachment</b></a>` : ''}
+                    ${attachmentHtml}
                 </h1>
                 <div class="user-data">
                     <img src="${userImage}" class="user-chat-image" />
@@ -354,7 +423,39 @@ Echo.private('broadcast-message')
             `;
             $('#chat-container').append(html);
             scrollChat();
+
         }
+        // Display notification for the receiver
+        if (data.notification && data.notification.receiver_id == sender_id) {
+            playNotificationSound();
+            showNotification(data.notification.message);
+        }
+    });
+
+    function playNotificationSound() {
+        let sound = new Audio('/sounds/notification.mp3');
+        sound.volume = 1.0;
+        sound.play().catch(error => console.log('Audio play failed:', error));
+    }
+    
+    function showNotification(message) {
+        let notificationHtml = `
+            <div class="notification">
+                <span>${message}</span>
+                <button class="close-notification"> ×</button>
+            </div>`;
+    
+        $('#notification-container').append(notificationHtml);
+        
+        // Auto-hide notification after 5 seconds
+        setTimeout(() => {
+            $('.notification').fadeOut(300, function () { $(this).remove(); });
+        }, 5000);
+    }
+    
+    // Close notification when clicked
+    $(document).on('click', '.close-notification', function() {
+        $(this).parent('.notification').remove();
     });
 
 
@@ -730,11 +831,28 @@ $(document).ready(function(){
     
                     let chat = res.data.message;
     
+                    let attachmentHtml = '';
+                    if (res.data.attachment) {
+                        const fileExtension = res.data.attachment.split('.').pop().toLowerCase();
+                        const fileUrl = "/storage/" + res.data.attachment;
+                        
+                        if (['jpg', 'jpeg', 'png', 'gif', 'bmp'].includes(fileExtension)) {
+                            attachmentHtml = `<img src="${fileUrl}" alt="Attachment" style="max-width: 100px; cursor: pointer;" onclick="window.open('${fileUrl}', '_blank')">`;
+                        } else if (['mp4', 'webm', 'ogg'].includes(fileExtension)) {
+                            attachmentHtml = `<video width="100" controls onclick="window.open('${fileUrl}', '_blank')">
+                                                <source src="${fileUrl}" type="video/${fileExtension}">
+                                              Your browser does not support the video tag.
+                                              </video>`;
+                        } else {
+                            attachmentHtml = `<a href="${fileUrl}" target="_blank"><b style="color:blue">View Attachment</b></a>`;
+                        }
+                    }
+
                     let html = `
                     <div class="current-user-chat" id='${res.data.id}-chat'>
                         <h1>
                             <span>${chat}</span>
-                            ${res.data.attachment ? `<a href="/storage/${res.data.attachment}" target="_blank"><b style="color:blue">View Attachment</b></a>` : ''}
+                            ${attachmentHtml}
                             <i class="fa fa-trash deleteGroupMessage" aria-hidden="true" data-id='${res.data.id}' data-toggle="modal" data-target="#groupDeleteChatModal"></i>
                             <i class="fa fa-edit editGroupChat" aria-hidden="true" data-id='${res.data.id}' data-msg='${res.data.message}' data-toggle="modal" data-target="#updateGroupChatModal"></i>
                         </h1>`;
@@ -777,11 +895,30 @@ Echo.private('broadcast-group-message')
 .listen('.getGroupChatMessage', (data) => {
     
     if(sender_id != data.chat.sender_id && global_group_id == data.chat.group_id) {
+        
+        let attachmentHtml = '';
+        if (data.chat.attachment) {
+            const fileExtension = data.chat.attachment.split('.').pop().toLowerCase();
+            const fileUrl = "/storage/" + data.chat.attachment;
+            
+            if (['jpg', 'jpeg', 'png', 'gif', 'bmp'].includes(fileExtension)) {
+                attachmentHtml = `<img src="${fileUrl}" alt="Attachment" style="max-width: 100px; cursor: pointer;" onclick="window.open('${fileUrl}', '_blank')">`;
+            } else if (['mp4', 'webm', 'ogg'].includes(fileExtension)) {
+                attachmentHtml = `<video width="100" controls onclick="window.open('${fileUrl}', '_blank')">
+                                    <source src="${fileUrl}" type="video/${fileExtension}">
+                                  Your browser does not support the video tag.
+                                  </video>`;
+            } else {
+                attachmentHtml = `<a href="${fileUrl}" target="_blank"><b style="color:blue">View Attachment</b></a>`;
+            }
+        }
+        
+        
         let html = `
         <div class="distance-user-chat" id= '`+data.chat.id+`-chat'>
             <h1>
             <span>`+data.chat.message+`</span>
-            ${data.chat.attachment ? `<a href="/storage/${data.chat.attachment}" target="_blank"><b style="color:blue">View Attachment</b></a>` : ''}
+            ${attachmentHtml}
             </h1>`;
             
             // var date = new Date(data.chat.user_data.updated_at);
@@ -814,88 +951,82 @@ Echo.private('broadcast-group-message')
 });
 
 
-function loadGroupChats(){
-
+function loadGroupChats() {
     $('#group-chat-container').html('');
 
     $.ajax({
         url: "/load-group-chats",
         type: "POST",
-        data: {group_id: global_group_id},
-        success: function(res){
-            
-            if(res.success){
-                
+        data: { group_id: global_group_id },
+        success: function (res) {
+            if (res.success) {
                 let chats = res.chats;
                 let html = '';
-                for(let i = 0; i < chats.length; i++){
-                    let addClass = 'distance-user-chat';
-                    if(chats[i].sender_id == sender_id){
-                        addClass = 'current-user-chat';
+
+                for (let i = 0; i < chats.length; i++) {
+                    let addClass = chats[i].sender_id == sender_id ? 'current-user-chat' : 'distance-user-chat';
+
+                    let attachmentHtml = '';
+                    if (chats[i].attachment) {
+                        const fileExtension = chats[i].attachment.split('.').pop().toLowerCase();
+                        const fileUrl = "/storage/" + chats[i].attachment;
+
+                        if (['jpg', 'jpeg', 'png', 'gif', 'bmp'].includes(fileExtension)) {
+                            attachmentHtml = `<img src="${fileUrl}" alt="Attachment" style="max-width: 100px; cursor: pointer;" onclick="window.open('${fileUrl}', '_blank')">`;
+                        } else if (['mp4', 'webm', 'ogg'].includes(fileExtension)) {
+                            attachmentHtml = `<video width="100" controls onclick="window.open('${fileUrl}', '_blank')">
+                                                <source src="${fileUrl}" type="video/${fileExtension}">
+                                              Your browser does not support the video tag.
+                                              </video>`;
+                        } else {
+                            attachmentHtml = `<a href="${fileUrl}" target="_blank"><b style="color:blue">View Attachment</b></a>`;
+                        }
                     }
 
                     html += `
-                    <div class="`+addClass+`" id= '`+chats[i].id+`-chat'>
+                    <div class="${addClass}" id="${chats[i].id}-chat">
                         <h1>
-                            <span>`+chats[i].message+`</span>
-                            ${chats[i].attachment ? `<a href="/storage/${chats[i].attachment}" target="_blank"><b style="color:blue">View Attachment</b></a>` : ''}
-                            `;
-                        
-                            if(chats[i].sender_id == sender_id){
-                                html += `
-                                <i class="fa fa-trash deleteGroupMessage" aria-hidden="true" data-id='`+chats[i].id+`' data-toggle="modal" data-target="#groupDeleteChatModal"></i>
-                                <i class="fa fa-edit editGroupChat" aria-hidden="true" data-id='`+chats[i].id+`' data-msg='`+chats[i].message+`' data-toggle="modal" data-target="#updateGroupChatModal"></i>
-                                `;
-                            }
-
-
-                            
-                        html += `</h1>`;
-
-                        // var date = new Date(chats[i].user_data.updated_at);
-                        var date = new Date(chats[i].created_at);
-
-                        var cDate = date.getDate();
-                        var cMonth = (date.getMonth() + 1) > 9 ? (date.getMonth() + 1) : '0' + (date.getMonth() + 1);
-                        var cYear = date.getFullYear();
-                        var cHours = date.getHours();
-                        var cMinutes = date.getMinutes();
-                        var cSeconds = date.getSeconds();
-                        
-
-                        let cDateTime =  cDate+'-'+cMonth+'-'+cYear+' '+(cHours > 9?cHours:'0'+cHours)+':'+(cMinutes > 9?cMinutes:'0'+cMinutes)+':'+cSeconds;
-
-                        let userImage = (chats[i].user_data.image == null)?'images/dummy.png':chats[i].user_data.image;
-                        html += `
-                        <div class="user-data">
-                            <img src="${userImage}" class="user-chat-image" />`;
-
-                            if(chats[i].sender_id == sender_id){
-                                html += `
-                                <b>Me</b>
-                                `;
-                            }
-                            else{
-                                html += `
-                                <b>`+chats[i].user_data.name+`</b>
-                                `;
-                            }
-                        
-                        html += `
-                            `+cDateTime+`
-                        </div>
-                    </div>
+                            <span>${chats[i].message}</span>
+                            ${attachmentHtml}
                     `;
+
+                    if (chats[i].sender_id == sender_id) {
+                        html += `
+                            <i class="fa fa-trash deleteGroupMessage" aria-hidden="true" data-id="${chats[i].id}" data-toggle="modal" data-target="#groupDeleteChatModal"></i>
+                            <i class="fa fa-edit editGroupChat" aria-hidden="true" data-id="${chats[i].id}" data-msg="${chats[i].message}" data-toggle="modal" data-target="#updateGroupChatModal"></i>
+                        `;
+                    }
+
+                    html += `</h1>`;
+
+                    let date = new Date(chats[i].created_at);
+                    let cDate = date.getDate();
+                    let cMonth = (date.getMonth() + 1) > 9 ? (date.getMonth() + 1) : '0' + (date.getMonth() + 1);
+                    let cYear = date.getFullYear();
+                    let cHours = date.getHours();
+                    let cMinutes = date.getMinutes();
+                    let cSeconds = date.getSeconds();
+                    
+                    let cDateTime = `${cDate}-${cMonth}-${cYear} ${(cHours > 9 ? cHours : '0' + cHours)}:${(cMinutes > 9 ? cMinutes : '0' + cMinutes)}:${cSeconds}`;
+
+                    let userImage = chats[i].user_data.image == null ? 'images/dummy.png' : chats[i].user_data.image;
+                    html += `
+                    <div class="user-data">
+                        <img src="${userImage}" class="user-chat-image" />
+                        <b>${chats[i].sender_id == sender_id ? 'Me' : chats[i].user_data.name}</b>
+                        ${cDateTime}
+                    </div>
+                    </div>`;
                 }
                 $('#group-chat-container').append(html);
                 scrollGroupChat();
-            }
-            else{
+            } else {
                 alert(res.msg);
             }
         }
-        });
-    }
+    });
+}
+
 
     $(document).ready(function(){
 

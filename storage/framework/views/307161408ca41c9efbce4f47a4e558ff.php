@@ -22,6 +22,7 @@
             <?php if(count($users) > 0): ?>
             
             <div class="col-md-3">
+              <input type="text" id="user-search" class="form-control mb-2" placeholder="Search Users...">
 
                 <ul class = "list-group">
                     <?php $__currentLoopData = $users; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $user): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -48,6 +49,7 @@
             </div>
 
             <div class="col-md-9">
+              <div id="notification-container" class="notification-area"></div>
                 <h1 class="start-head">Click in user to Start the chat</h1>
 
                 <div class="chat-section">
@@ -80,7 +82,21 @@
         </div>
         </div>
 
-
+        <script>
+          document.getElementById("user-search").addEventListener("keyup", function () {
+              let filter = this.value.toLowerCase();
+              let users = document.querySelectorAll(".user-list");
+              
+              users.forEach(user => {
+                  let name = user.textContent.toLowerCase();
+                  if (name.includes(filter)) {
+                      user.style.display = "block";
+                  } else {
+                      user.style.display = "none";
+                  }
+              });
+          });
+      </script>
 
   <!-- Modal -->
   <div class="modal fade" id="deleteChatModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">

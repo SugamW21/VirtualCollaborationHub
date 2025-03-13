@@ -14,16 +14,18 @@ class RatingFeedbackController extends Controller
     {
         $request->validate([
             'rating' => 'required|integer|min:1|max:5',
-            'feedback' => 'required|string',
+            'feedback' => 'nullable|string',
         ]);
 
+        $feedback = $request->feedback ?? 'No feedback';
+        
         RatingFeedback::create([
             'user_id' => Auth::id(),
             'rating' => $request->rating,
             'feedback' => $request->feedback,
         ]);
 
-        return redirect('/')->with('status', 'Thank you for your feedback!');
+        return redirect('/feedbackandrating')->with('status', 'Thank you for your feedback!');
     }
 
     public function showFeedback()

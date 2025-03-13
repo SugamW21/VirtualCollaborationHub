@@ -165,7 +165,12 @@ Route::delete('/admin/users/{id}', [AdminController::class, 'destroy'])->name('u
 
     Route::post('/submit-feedback', [RatingFeedbackController::class, 'submitFeedback'])->name('submit-feedback');
     Route::get('/admin/feedbacks', [RatingFeedbackController::class, 'showFeedback'])->name('admin.feedbacks');
-
+    
+    
+    Route::get('/feedbackandrating', function () {
+        return view('feedbackandrating');
+    })->name('feedbackandrating');
+    
 
 
 

@@ -13,7 +13,7 @@
           <link rel="icon" href="images/logo.png" type="image/x-icon">
           <title>Virtual Collaboration Hub</title>
       </head>    
-    
+      <div id="notification-container" class="notification-area"></div>
         <div class="container mt-4"> 
         <h1 style="font-size:50px">Groups</h1>
         

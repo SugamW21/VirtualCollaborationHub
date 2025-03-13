@@ -35,7 +35,7 @@
             }
         </style>
     </head>
-
+    <div id="notification-container" class="notification-area"></div>
     <div class="background">
         <div class="container"> 
             <div class="text-center">
@@ -63,7 +63,7 @@
                         <th>Start Date</th>
                         <th>Due Date</th>
                         <th>Time Remaining</th>
-                        
+                        <th>Time Left</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
