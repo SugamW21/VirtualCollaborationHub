@@ -30,10 +30,17 @@ class GroupMessageEvent implements ShouldBroadcast
      * @return array<int, \Illuminate\Broadcasting\Channel>
      */
 
+    // public function broadcastWith(){
+    //     return ['chat' => $this->chatData];
+    // }
     public function broadcastWith(){
-        return ['chat' => $this->chatData];
+        return ['chat' => $this->chatData,
+        'notification' => [
+            'message' => "{$this->chatData->userData->name} sent a message in {$this->chatData->group->name} group",
+            'sender_id' => $this->chatData->sender_id,
+            'group_id' => $this->chatData->group_id
+        ]];
     }
-
 
     public function broadcastAs(){
         return 'getGroupChatMessage';

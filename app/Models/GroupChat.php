@@ -17,6 +17,9 @@ class GroupChat extends Model
     ];
 
     public function userData(){
-        return $this->hasOne(User::class, 'id', 'sender_id');
+        return $this->belongsTo(User::class, 'sender_id', 'id');
+    }
+    public function group(){
+        return $this->belongsTo(group::class, 'group_id', 'id');
     }
 }

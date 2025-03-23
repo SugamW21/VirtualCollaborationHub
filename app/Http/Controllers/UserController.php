@@ -371,7 +371,7 @@ public function saveGroupChat(Request $request)
             'attachment' => $attachmentPath // Store the file path in the database
         ]);
 
-        $chat = GroupChat::with('userData')->where('id', $chat->id)->first();
+        $chat = GroupChat::with('userData','group')->where('id', $chat->id)->first();
         event(new GroupMessageEvent($chat));
 
         return response()->json(['success' => true, 'data' => $chat]);

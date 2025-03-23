@@ -44,9 +44,9 @@
 
                 </ul>
             </div>
-
+            <div id="notification-container" class="notification-area"></div>
             <div class="col-md-9">
-              <div id="notification-container" class="notification-area"></div>
+             
                 <h1 class="group-start-head">Click in group to Start the chat</h1>
 
                 <div class="group-chat-section">

@@ -893,9 +893,10 @@ $(document).ready(function(){
 
 Echo.private('broadcast-group-message')
 .listen('.getGroupChatMessage', (data) => {
-    
+    console.log(data);
     if(sender_id != data.chat.sender_id && global_group_id == data.chat.group_id) {
-        
+        console.log("Appending new message to UI...");
+
         let attachmentHtml = '';
         if (data.chat.attachment) {
             const fileExtension = data.chat.attachment.split('.').pop().toLowerCase();
@@ -947,9 +948,34 @@ Echo.private('broadcast-group-message')
         $('#group-chat-container').append(html);
         scrollGroupChat();
     }
+        // Display notification for the receiver
+if (data.notification && data.notification.group_id == global_group_id && sender_id != data.notification.sender_id) {
+    console.log("Notification received:", data.notification);
+    playGroupNotificationSound();
+    showGroupNotification(data.notification.message);
+}
 
 });
+function playGroupNotificationSound() {
+    let sound = new Audio('/sounds/notification.mp3');
+    sound.volume = 1.0;
+    sound.play().catch(error => console.log('Audio play failed:', error));
+}
 
+function showGroupNotification(message) {
+    let notificationHtml = `
+        <div class="notification">
+            <span>${message}</span>
+            <button class="close-notification"> ×</button>
+        </div>`;
+
+    $('#notification-container').append(notificationHtml);
+    
+    // Auto-hide notification after 5 seconds
+    setTimeout(() => {
+        $('.notification').fadeOut(300, function () { $(this).remove(); });
+    }, 5000);
+}
 
 function loadGroupChats() {
     $('#group-chat-container').html('');

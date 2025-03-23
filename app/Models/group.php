@@ -16,4 +16,9 @@ class group extends Model
         'join_limit',
         
     ];
+
+    public function group()
+    {
+        return $this->belongsTo(GroupChat::class, 'group_id');
+    }
 }

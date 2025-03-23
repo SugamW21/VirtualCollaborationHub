@@ -8,65 +8,49 @@
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag && $constructor = (new ReflectionClass(App\View\Components\AppLayout::class))->getConstructor()): ?>
 <?php $attributes = $attributes->except(collect($constructor->getParameters())->map->getName()->all()); ?>
 <?php endif; ?>
-<?php $component->withAttributes([]); ?>
-    <!DOCTYPE html>
-    <html>
-      <head>
-        <script src="https://8x8.vc/vpaas-magic-cookie-e4df4fc3cebf4b93a47c50ed6306af90/external_api.js" async></script>
-        <style>
-          /* Ensure full height for all necessary elements */
-          x-app-layout, html, body {
-            height: 100vh;
-            width: 100%;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-          }
-  
-          #jaas-container {
-            flex-grow: 1; /* Allows Jitsi container to take up remaining space */
-            display: none; /* Hidden until meeting starts */
-            height: 100vh;
-            width: 100%;
-          }
-  
-          #meeting-button {
-            font-size: 18px;
-            padding: 10px 20px;
-            cursor: pointer;
-            margin: 20px;
-            border: none;
-            background-color: #007bff;
-            color: white;
-            border-radius: 5px;
-          }
-  
-          #meeting-button:hover {
-            background-color: #0056b3;
-          }
-        </style>
-        <script type="text/javascript">
-          function startMeeting() {
-            document.getElementById("meeting-button").style.display = "none";
-            document.getElementById("jaas-container").style.display = "flex";
-  
-            const api = new JitsiMeetExternalAPI("8x8.vc", {
-              roomName: "vpaas-magic-cookie-e4df4fc3cebf4b93a47c50ed6306af90/SampleAppAlienDocumentationsSponsorTerribly",
-              parentNode: document.querySelector("#jaas-container"),
-              width: "100%",
-              height: "100%",
-            });
-          }
-        </script>
-      </head>
-      <div id="notification-container" class="notification-area"></div>
-      <body>
-        <button id="meeting-button" onclick="startMeeting()">Create Meeting</button>
-        <div id="jaas-container"></div>
-      </body>
-    </html>
-   <?php echo $__env->renderComponent(); ?>
+<?php $component->withAttributes([]); ?> 
+  <!DOCTYPE html>
+  <html>
+    <head>
+      <script src="https://8x8.vc/vpaas-magic-cookie-e4df4fc3cebf4b93a47c50ed6306af90/external_api.js" async></script>
+      <style>
+        /* Ensure full height for all necessary elements */
+        x-app-layout, html, body {
+          height: 100vh;
+          width: 100%;
+          margin: 0;
+          padding: 0;
+          display: flex;
+          flex-direction: column;
+        }
+
+        #jaas-container {
+          flex-grow: 1; /* Allows Jitsi container to take up remaining space */
+          height: 100vh;
+          width: 100%;
+        }
+      </style>
+      <script type="text/javascript">
+        function startMeeting() {
+          document.getElementById("jaas-container").style.display = "flex";
+
+          const api = new JitsiMeetExternalAPI("8x8.vc", {
+            roomName: "vpaas-magic-cookie-e4df4fc3cebf4b93a47c50ed6306af90/SampleAppAlienDocumentationsSponsorTerribly",
+            parentNode: document.querySelector("#jaas-container"),
+            width: "100%",
+            height: "100%",
+          });
+        }
+
+        window.onload = startMeeting; // Start meeting automatically when page loads
+      </script>
+    </head>
+    <div id="notification-container" class="notification-area"></div>
+    <body>
+      <div id="jaas-container"></div>
+    </body>
+  </html>
+ <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginal9ac128a9029c0e4701924bd2d73d7f54)): ?>
 <?php $attributes = $__attributesOriginal9ac128a9029c0e4701924bd2d73d7f54; ?>
@@ -76,6 +60,7 @@
 <?php $component = $__componentOriginal9ac128a9029c0e4701924bd2d73d7f54; ?>
 <?php unset($__componentOriginal9ac128a9029c0e4701924bd2d73d7f54); ?>
 <?php endif; ?>
+
   
   
   <?php /**PATH C:\laragon\www\VirtualCollaborationHub\resources\views/meetings/meeting.blade.php ENDPATH**/ ?>

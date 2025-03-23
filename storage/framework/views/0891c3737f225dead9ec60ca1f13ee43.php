@@ -12,6 +12,136 @@
         <head>
           <link rel="icon" href="images/logo.png" type="image/x-icon">
           <title>Virtual Collaboration Hub</title>
+          <style>
+            /* General Styles */
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f8fafc;
+    color: #333;
+}
+
+/* Container Styling */
+.container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 2rem;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #1e293b;
+}
+
+/* Table Styling */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #ffffff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.table thead {
+    background: #1e40af;
+    color: white;
+}
+
+.table th, .table td {
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.table img {
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+/* Buttons */
+.btn {
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background: #2563eb;
+    color: white;
+    border: none;
+}
+
+.btn-primary:hover {
+    background: #1e40af;
+}
+
+.btn-danger {
+    background: #dc2626;
+    color: white;
+    border: none;
+}
+
+.btn-danger:hover {
+    background: #b91c1c;
+}
+
+/* Modal Styling */
+.modal-content {
+    border-radius: 12px;
+    padding: 1.5rem;
+}
+
+.modal-header {
+    background: #1e3a8a;
+    color: white;
+    border-radius: 12px 12px 0 0;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Form Inputs */
+input[type='text'], input[type='number'], input[type='file'] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    font-size: 1rem;
+}
+
+/* Icons */
+.fa-trash {
+    color: #dc2626;
+    cursor: pointer;
+}
+
+.fa-pencil {
+    color: #2563eb;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.fa-copy {
+    color: #1e3a8a;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.fa-trash:hover, .fa-pencil:hover, .fa-copy:hover {
+    opacity: 0.7;
+}
+          </style>
       </head>    
       <div id="notification-container" class="notification-area"></div>
         <div class="container mt-4"> 
