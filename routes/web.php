@@ -175,11 +175,23 @@ Route::delete('/admin/users/{id}', [AdminController::class, 'destroy'])->name('u
 
 
 
-    Route::get('/meetings', [MeetingController::class, 'loadMeeting'])
-    ->middleware(['auth', 'verified'])
-    ->name('meetings.meeting');
+    // Route::get('/meetings', [MeetingController::class, 'loadMeeting'])
+    // ->middleware(['auth', 'verified'])
+    // ->name('meetings.meeting');
 
-    Route::get('/create-meeting', [MeetingController::class, 'generateMeeting']);
+    Route::middleware(['auth'])->group(function () {
+        Route::get('/meetings', [MeetingController::class, 'loadMeeting'])->name('meetings.meeting');
+        Route::get('/meetingss', [MeetingController::class, 'loadMeetings'])->name('meetings.meetings');
+        Route::post('/meetings/create', [MeetingController::class, 'createMeeting'])->name('meetings.create');
+        Route::post('/meetings/invite', [MeetingController::class, 'sendInvite'])->name('meetings.invite');
+        Route::get('/meetings/invitations', [MeetingController::class, 'getInvitations'])->name('meetings.invitations');
+        Route::post('/meetings/respond/{meetingId}', [MeetingController::class, 'respondToInvite'])->name('meetings.respond');
+        Route::get('/meetings/accept/{meetingId}', [MeetingController::class, 'acceptInvite'])->name('meetings.accept');
+        Route::get('/meetings/reject/{meetingId}', [MeetingController::class, 'rejectInvite'])->name('meetings.reject');
+        
+
+    });
+    
 
 
 
