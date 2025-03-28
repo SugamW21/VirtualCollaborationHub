@@ -9,6 +9,7 @@
                 <form action="{{ route('meetings.respond', $invitation->id) }}" method="POST">
                     @csrf
                     <button type="submit" name="status" value="accepted">Accept</button>
+                    <button type="submit" name="status" value="accepted">Accept</button>
                     <button type="submit" name="status" value="rejected">Reject</button>
                 </form>
             @elseif ($invitation->status == 'accepted')
