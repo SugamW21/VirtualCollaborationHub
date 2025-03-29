@@ -9,7 +9,7 @@
     <p>Hi,</p>
     <p><?php echo e($sender_name, false); ?> has invited you to join a meeting.</p>
     <h3>Accept or Reject the Invitation</h3>
-    <a href="<?php echo e($meeting_url, false); ?>" style="background-color: green; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Join Meeting</a>
+    <a href="<?php echo e($accept_url, false); ?>" style="background-color: green; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Accept</a>
     <a href="<?php echo e($reject_url, false); ?>" style="background-color: red; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Reject</a>
 </body>
 </html>
