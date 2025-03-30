@@ -48,27 +48,91 @@
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        .hero-bg {
-            position: relative;
-            min-height: 100vh;
-            overflow: hidden;
-        }
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
 
-        .hero-bg video {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transform: translate(-50%, -50%);
-            z-index: 0;
-        }
+:root {
+    --primary-color: #4F46E5;
+    --secondary-color: #6366F1;
+    --text-light: #E2E8F0;
+    --glass-bg: rgba(255, 255, 255, 0.1);
+}
 
-        .hero-bg > * {
-            position: relative;
-            z-index: 1;
-        }
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #1E293B, #111827);
+    color: var(--text-light);
+}
+
+/* Navbar */
+header {
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* Hero Section */
+.hero-bg {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-bg video {
+    opacity: 0.2;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.hero-bg div {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    padding: 2.5rem;
+    border-radius: 15px;
+    box-shadow: 0 15px 35px rgba(255, 255, 255, 0.1);
+    animation: fadeIn 1.2s ease-in-out;
+}
+
+/* Buttons */
+.cta-btn {
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 5px 15px rgba(79, 70, 229, 0.3);
+}
+
+.cta-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 30px rgba(79, 70, 229, 0.4);
+}
+
+/* Footer */
+footer {
+    background: var(--glass-bg);
+    text-align: center;
+    padding: 20px 0;
+    font-size: 14px;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
     </style>
 </head>
 <body class="antialiased bg-gray-100 text-gray-900 dark:bg-gray-900 dark:text-white">

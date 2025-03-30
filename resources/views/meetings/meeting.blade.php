@@ -3,38 +3,48 @@
         <script src="https://8x8.vc/vpaas-magic-cookie-e4df4fc3cebf4b93a47c50ed6306af90/external_api.js"></script>
         <style>
             .container {
-                background: white;
+                background: rgba(255, 255, 255, 0.8); /* Transparent background */
                 padding: 20px;
-                border-radius: 10px;
-                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+                border-radius: 15px;
+                box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
                 text-align: center;
                 width: 90%;
-                max-width: 500px;
+                max-width: 600px;
                 margin: 20px auto;
+                backdrop-filter: blur(10px); /* Optional: Adds a blur effect for better readability */
+            }
+            h2 {
+                font-size: 2rem;
+                color: #ffffff;
+                margin-bottom: 20px;
+                font-family: 'Arial', sans-serif;
             }
     
             button {
-                background: #007bff;
+                background: #4CAF50;
                 color: white;
                 border: none;
-                padding: 10px 20px;
-                border-radius: 5px;
+                padding: 12px 24px;
+                border-radius: 8px;
                 cursor: pointer;
                 transition: background 0.3s;
                 margin: 10px 0;
                 width: 100%;
+                font-size: 1rem;
             }
     
             button:hover {
-                background: #0056b3;
+                background: #45a049;
             }
-    
+
             input {
                 width: 100%;
-                padding: 10px;
+                padding: 12px;
                 margin: 10px 0;
-                border: 1px solid #ccc;
-                border-radius: 5px;
+                border: 1px solid #ddd;
+                border-radius: 8px;
+                font-size: 1rem;
+                color: #333;
             }
     
             #jaas-container {
@@ -50,11 +60,27 @@
                 text-align: center;
                 padding: 20px;
                 font-size: 18px;
+                color: #000000;
+            }
+
+            /* Invite section */
+            #inviteSection {
+                margin-top: 20px;
+            }
+
+            #inviteSection h3 {
+                font-size: 1.5rem;
+                color: #333;
+            }
+
+            /* Added stylish border */
+            .border-radius-button {
+                border-radius: 10px;
             }
         </style>
         
         <div class="container" id="meeting-controls">
-            <h2>Virtual Meeting</h2>
+            <h3>Virtual Meeting</h3>
             <button onclick="createMeeting()">Create Meeting</button>
             <input type="text" id="meetingLink" readonly placeholder="Meeting link will appear here">
             

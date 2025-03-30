@@ -3,9 +3,21 @@
         <link rel="icon" href="images/logo.png" type="image/x-icon">
         <title>Virtual Collaboration Hub</title>
     </head>
-    <div class="flex items-center justify-center min-h-screen relative overflow-hidden">
-        <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('images/dashboard.jpg'); filter: blur(8px);"></div>
-        <div class="absolute inset-0 bg-black opacity-30"></div>
+    {{-- <div class="flex items-center justify-center min-h-screen relative overflow-hidden">
+        <div class="absolute inset-0 bg-cover bg-center" style="background-video: url('video/dashboard.mp4'); filter: blur(8px);"></div>
+        <div class="absolute inset-0 bg-black opacity-30"></div> --}}
+
+        <div class=" min-h-screen relative overflow-hidden">
+          <!-- Background Video -->
+          <video autoplay loop muted class="absolute inset-0 w-full h-full object-cover" style="filter: blur(8px);>
+              <source src="videos/chat.mp4" type="video/mp4">
+              <!-- Fallback in case MP4 is not supported -->
+              <source src="videos/chat.mp4" type="video/webm">
+          </video>
+      
+          <!-- Optional Overlay -->
+          <div class="absolute inset-0 bg-black opacity-50"></div>
+      
 
     <div class="container mt-4"> 
 
@@ -147,7 +159,8 @@
       </div>
     </div>
   </div>
-
+  
+</div>
   <!--Start of Tawk.to Script-->
 <script type="text/javascript">
   var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
