@@ -21,6 +21,10 @@ use App\Models\Task;
 // createGroup
 class UserController extends Controller
 {
+    public function loadHomePage()
+    {
+        return view('home');
+    }
     public function loadDashboard()
     {
         $users = User::whereNotIn('id', [auth()->user()->id])->get();
