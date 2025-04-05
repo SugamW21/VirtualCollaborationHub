@@ -12,6 +12,7 @@
         <link rel="icon" href="images/logo.png" type="image/x-icon">
         <title>Virtual Collaboration Hub</title>
     </head>
+
     
 
         <div class=" min-h-screen relative overflow-hidden">

@@ -153,6 +153,10 @@ Route::post('/task', [TaskController::class, 'store'])
     ->middleware(['auth', 'verified'])
     ->name('taskshow'); // Corrected this line
 
+    Route::post('/tasks/{task}/restore', [TaskController::class, 'restore'])
+    ->middleware(['auth', 'verified'])
+    ->name('tasks.restore');
+
     Route::get('/admin/dashboard', [AdminController::class, 'loadDashboard'])->name('admin.dashboard');
 
 

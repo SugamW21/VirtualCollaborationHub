@@ -15,6 +15,7 @@ use App\Models\Member;
 use App\Models\GroupChat;
 use App\Events\GroupMessageEvent;
 use App\Models\Task;
+use App\Models\RatingFeedback;
 
 
 
@@ -23,7 +24,8 @@ class UserController extends Controller
 {
     public function loadHomePage()
     {
-        return view('home');
+        $feedbacks = RatingFeedback::with('user')->latest()->get(); // optional: limit with ->take(5)
+        return view('home', compact('feedbacks'));
     }
     public function loadDashboard()
     {

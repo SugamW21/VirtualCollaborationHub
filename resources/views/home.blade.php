@@ -1,126 +1,129 @@
+<x-app-layout>
+    <div class="relative h-screen overflow-hidden">
 
+        <!-- Background Video -->
+        <video autoplay muted loop playsinline class="absolute top-0 left-0 w-full h-full object-cover z-0">
+            <source src="{{ asset('videos/home2.mp4') }}" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
 
-
-<x-app-layout> 
-    <div class="flex h-screen bg-gray-50">
+        <!-- Overlay -->
+        <div class="absolute inset-0 bg-black bg-opacity-60 z-10"></div>
 
         <!-- Main Content -->
-        <main class="flex-1 p-8 space-y-8">
-            <h1 class="text-4xl font-bold text-gray-900 mb-8">Dashboard</h1>
+        <div class="relative z-20 flex h-full">
+            <main class="flex-1 p-8 space-y-8 overflow-y-auto">
+                <h1 class="text-4xl font-bold text-white mb-8">Dashboard</h1>
 
-            <!-- Feature Cards -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Chatroom Feature -->
-                <!-- Chatroom Feature -->
-<div class="bg-white p-6 rounded-xl shadow-lg transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-2xl hover:translate-y-2">
-    <h3 class="text-xl font-semibold text-gray-800">📩 Chatroom</h3>
-    <p class="text-gray-600 mt-2">Start a private conversation.</p>
-    <div class="flex justify-between items-center mt-4">
-        <button class="text-blue-600 inline-block font-semibold transition-all duration-200 ease-in-out hover:text-blue-800 hover:underline" onclick="openModal('chatroom')">More Info</button>
-        <a href="{{ route('dashboard') }}" class="text-blue-600 inline-block font-semibold transition-all duration-200 ease-in-out hover:text-blue-800 hover:underline">Go to Chatroom →</a>
-    </div>
-</div>
+                <!-- Dashboard Feature Cards -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                    @foreach ([
+                        ['title' => '📩 Chatroom', 'desc' => 'Start a private conversation.', 'feature' => 'chatroom', 'link' => route('dashboard'), 'linkText' => 'Go to Chatroom →'],
+                        ['title' => '🆕 Create Group', 'desc' => 'Start a new group for collaboration.', 'feature' => 'create-group', 'link' => route('groups'), 'linkText' => 'Go to Settings →'],
+                        ['title' => '👥 Group Chat', 'desc' => 'Collaborate with your team.', 'feature' => 'group-chat', 'link' => route('meetings.meeting'), 'linkText' => 'Start a Meeting →'],
+                        ['title' => '🎥 Meetings', 'desc' => 'Start or join a video meeting.', 'feature' => 'meetings', 'link' => route('meetings.meeting'), 'linkText' => 'Start a Meeting →'],
+                        ['title' => '📋 Task Management', 'desc' => 'Manage and track project tasks.', 'feature' => 'task-management', 'link' => route('tasks.index'), 'linkText' => 'Manage Tasks →'],
+                        ['title' => '⚙️ Profile & Settings', 'desc' => 'Customize your account settings.', 'feature' => 'profile-settings', 'link' => route('profile.edit'), 'linkText' => 'Go to Settings →'],
+                    ] as $card)
+                        <div class="bg-white/90 backdrop-blur-md p-6 rounded-xl shadow-lg transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-2xl hover:translate-y-2">
+                            <h3 class="text-xl font-semibold text-gray-800">{{ $card['title'] }}</h3>
+                            <p class="text-gray-600 mt-2">{{ $card['desc'] }}</p>
+                            <div class="flex justify-between items-center mt-4">
+                                <button class="text-blue-600 font-semibold transition hover:text-blue-800 hover:underline" onclick="openModal('{{ $card['feature'] }}')">More Info</button>
+                                <a href="{{ $card['link'] }}" class="text-blue-600 font-semibold transition hover:text-blue-800 hover:underline">{{ $card['linkText'] }}</a>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+<br>
+<br>
+<br>
+                <!-- User Feedback Section -->
+                <div class="bg-white/90 backdrop-blur-md p-6 rounded-xl shadow-lg mt-8">
+                    <h2 class="text-3xl font-bold mb-6 text-gray-800">What Our Users Say 💬</h2>
 
-<!-- Create Group Feature -->
-<div class="bg-white p-6 rounded-xl shadow-lg transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-2xl hover:translate-y-2">
-    <h3 class="text-xl font-semibold text-gray-800">🆕 Create Group</h3>
-    <p class="text-gray-600 mt-2">Start a new group for collaboration.</p>
-    <div class="flex justify-between items-center mt-4">
-        <button class="text-blue-600 inline-block font-semibold transition-all duration-200 ease-in-out hover:text-blue-800 hover:underline" onclick="openModal('create-group')">More Info</button>
-        <a href="{{ route('groups') }}" class="text-blue-600 inline-block font-semibold transition-all duration-200 ease-in-out hover:text-blue-800 hover:underline">Go to Settings →</a>
-    </div>
-</div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        @forelse($feedbacks as $feedback)
+                            <div class="bg-white rounded-xl shadow-md p-5 hover:shadow-xl transition duration-300">
+                                <div class="flex items-center gap-4 mb-4">
+                                    <img src="{{ $feedback->user->image ?? asset('images/default-avatar.png') }}" 
+                                        alt="User Avatar" 
+                                        class="w-20 h-20 rounded-full object-cover border border-gray-300 shadow-sm">
 
-<!-- Group Chat Feature -->
-<div class="bg-white p-6 rounded-xl shadow-lg transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-2xl hover:translate-y-2">
-    <h3 class="text-xl font-semibold text-gray-800">👥 Group Chat</h3>
-    <p class="text-gray-600 mt-2">Collaborate with your team.</p>
-    <div class="flex justify-between items-center mt-4">
-        <button class="text-blue-600 inline-block font-semibold transition-all duration-200 ease-in-out hover:text-blue-800 hover:underline" onclick="openModal('group-chat')">More Info</button>
-        <a href="{{ route('meetings.meeting') }}" class="text-blue-600 inline-block font-semibold transition-all duration-200 ease-in-out hover:text-blue-800 hover:underline">Start a Meeting →</a>
-    </div>
-</div>
-
-<!-- Meetings Feature -->
-<div class="bg-white p-6 rounded-xl shadow-lg transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-2xl hover:translate-y-2">
-    <h3 class="text-xl font-semibold text-gray-800">🎥 Meetings</h3>
-    <p class="text-gray-600 mt-2">Start or join a video meeting.</p>
-    <div class="flex justify-between items-center mt-4">
-        <button class="text-blue-600 inline-block font-semibold transition-all duration-200 ease-in-out hover:text-blue-800 hover:underline" onclick="openModal('meetings')">More Info</button>
-        <a href="{{ route('meetings.meeting') }}" class="text-blue-600 inline-block font-semibold transition-all duration-200 ease-in-out hover:text-blue-800 hover:underline">Start a Meeting →</a>
-    </div>
-</div>
-
-<!-- Task Management Feature -->
-<div class="bg-white p-6 rounded-xl shadow-lg transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-2xl hover:translate-y-2">
-    <h3 class="text-xl font-semibold text-gray-800">📋 Task Management</h3>
-    <p class="text-gray-600 mt-2">Manage and track project tasks.</p>
-    <div class="flex justify-between items-center mt-4">
-        <button class="text-blue-600 inline-block font-semibold transition-all duration-200 ease-in-out hover:text-blue-800 hover:underline" onclick="openModal('task-management')">More Info</button>
-        <a href="{{ route('tasks.index') }}" class="text-blue-600 inline-block font-semibold transition-all duration-200 ease-in-out hover:text-blue-800 hover:underline">Manage Tasks →</a>
-    </div>
-</div>
-
-<!-- Profile & Settings Feature -->
-<div class="bg-white p-6 rounded-xl shadow-lg transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-2xl hover:translate-y-2">
-    <h3 class="text-xl font-semibold text-gray-800">⚙️ Profile & Settings</h3>
-    <p class="text-gray-600 mt-2">Customize your account settings.</p>
-    <div class="flex justify-between items-center mt-4">
-        <button class="text-blue-600 inline-block font-semibold transition-all duration-200 ease-in-out hover:text-blue-800 hover:underline" onclick="openModal('profile-settings')">More Info</button>
-        <a href="{{ route('profile.edit') }}" class="text-blue-600 inline-block font-semibold transition-all duration-200 ease-in-out hover:text-blue-800 hover:underline">Go to Settings →</a>
-    </div>
-</div>
-
-            </div>
-        </main>
-    </div>
-
-    <!-- Modal (Hidden by default) -->
-    <div id="feature-modal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden">
-        <div class="bg-white p-6 rounded-xl w-1/2 relative">
-            <!-- Close Button -->
-            <button class="absolute top-2 right-2 text-gray-500 text-2xl" onclick="closeModal()">×</button>
-            <h2 id="modal-title" class="text-2xl font-semibold mb-4">Feature Information</h2>
-            <p id="modal-description" class="text-gray-600"></p>
+                                    <div>
+                                        <h4 class="font-semibold text-lg text-gray-800">{{ $feedback->user->name }}</h4>
+                                        <div class="flex items-center text-yellow-400">
+                                            @for ($i = 1; $i <= 5; $i++)
+                                                <svg class="w-4 h-4" fill="{{ $i <= $feedback->rating ? 'currentColor' : 'none' }}" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                          d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 
+                                                          3.957a1 1 0 00.95.69h4.163c.969 0 
+                                                          1.371 1.24.588 1.81l-3.37 
+                                                          2.448a1 1 0 00-.364 1.118l1.285 
+                                                          3.956c.3.921-.755 
+                                                          1.688-1.538 1.118L12 
+                                                          13.347l-3.37 
+                                                          2.448c-.783.57-1.838-.197-1.538-1.118l1.286-3.956a1 
+                                                          1 0 00-.364-1.118L4.644 
+                                                          9.384c-.783-.57-.38-1.81.588-1.81h4.163a1 
+                                                          1 0 00.95-.69l1.286-3.957z"/>
+                                                </svg>
+                                            @endfor
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="text-gray-600 leading-relaxed">{{ $feedback->feedback }}</p>
+                            </div>
+                        @empty
+                            <p class="text-gray-500">No feedback available yet. Be the first to leave a review!</p>
+                        @endforelse
+                    </div>
+                </div>
+            </main>
         </div>
+
+        <!-- Modal -->
+        <div id="feature-modal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden z-30">
+            <div class="bg-white p-6 rounded-xl w-11/12 md:w-1/2 relative">
+                <button class="absolute top-2 right-2 text-gray-500 text-2xl" onclick="closeModal()">×</button>
+                <h2 id="modal-title" class="text-2xl font-semibold mb-4">Feature Information</h2>
+                <p id="modal-description" class="text-gray-600"></p>
+            </div>
+        </div>
+
+        <!-- Scripts -->
+        <script>
+            const featureInfo = {
+                chatroom: "This feature allows you to start private conversations with your contacts. You can send messages and stay in touch.",
+                "create-group": "This feature allows you to create a new group for team collaboration. Add members and start working together!",
+                "group-chat": "Group Chat allows you to collaborate with your team members. Share messages and files in real-time.",
+                meetings: "With Meetings, you can start or join video meetings with your team. Stay connected with face-to-face communication.",
+                "task-management": "Manage your project tasks easily. Assign tasks, set deadlines, and track your team's progress.",
+                "profile-settings": "This feature allows you to customize your account settings, including profile updates and privacy preferences."
+            };
+
+            function openModal(feature) {
+                document.getElementById("modal-title").innerText = feature.replace("-", " ").replace(/\b\w/g, c => c.toUpperCase());
+                document.getElementById("modal-description").innerText = featureInfo[feature];
+                document.getElementById("feature-modal").classList.remove("hidden");
+            }
+
+            function closeModal() {
+                document.getElementById("feature-modal").classList.add("hidden");
+            }
+        </script>
+
+        <!-- Tawk.to Live Chat -->
+        <script type="text/javascript">
+            var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+            (function () {
+                var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+                s1.async = true;
+                s1.src = 'https://embed.tawk.to/67df9e0c0df93d190c6bf814/1in0o2ocd';
+                s1.charset = 'UTF-8';
+                s1.setAttribute('crossorigin', '*');
+                s0.parentNode.insertBefore(s1, s0);
+            })();
+        </script>
     </div>
-
-    <script>
-        const featureInfo = {
-            chatroom: "This feature allows you to start private conversations with your contacts. You can send messages and stay in touch.",
-            "create-group": "This feature allows you to create a new group for team collaboration. Add members and start working together!",
-            "group-chat": "Group Chat allows you to collaborate with your team members. Share messages and files in real-time.",
-            meetings: "With Meetings, you can start or join video meetings with your team. Stay connected with face-to-face communication.",
-            "task-management": "Manage your project tasks easily. Assign tasks, set deadlines, and track your team's progress.",
-            "profile-settings": "This feature allows you to customize your account settings, including profile updates and privacy preferences."
-        };
-
-        function openModal(feature) {
-            const modal = document.getElementById("feature-modal");
-            const title = document.getElementById("modal-title");
-            const description = document.getElementById("modal-description");
-
-            title.innerText = `${feature.charAt(0).toUpperCase() + feature.slice(1).replace("-", " ")}`;
-            description.innerText = featureInfo[feature];
-            modal.classList.remove("hidden");
-        }
-
-        function closeModal() {
-            const modal = document.getElementById("feature-modal");
-            modal.classList.add("hidden");
-        }
-    </script>
-      <!--Start of Tawk.to Script-->
-<script type="text/javascript">
-    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-    (function(){
-    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-    s1.async=true;
-    s1.src='https://embed.tawk.to/67df9e0c0df93d190c6bf814/1in0o2ocd';
-    s1.charset='UTF-8';
-    s1.setAttribute('crossorigin','*');
-    s0.parentNode.insertBefore(s1,s0);
-    })();
-    </script>
 </x-app-layout>
-

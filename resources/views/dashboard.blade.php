@@ -3,6 +3,7 @@
         <link rel="icon" href="images/logo.png" type="image/x-icon">
         <title>Virtual Collaboration Hub</title>
     </head>
+
     {{-- <div class="flex items-center justify-center min-h-screen relative overflow-hidden">
         <div class="absolute inset-0 bg-cover bg-center" style="background-video: url('video/dashboard.mp4'); filter: blur(8px);"></div>
         <div class="absolute inset-0 bg-black opacity-30"></div> --}}

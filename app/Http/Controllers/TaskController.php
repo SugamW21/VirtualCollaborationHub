@@ -340,4 +340,19 @@ class TaskController extends Controller
 
         return view('taskshow', compact('completedTasks'));
     }
+
+    public function restore(Task $task)
+{
+    // Check if the user is authorized to restore this task
+    if ($task->user_id != auth()->id()) {
+        return redirect()->back()->with('error', 'You are not authorized to restore this task.');
+    }
+    
+    // Update the task to mark it as not completed
+    $task->completed = false;
+    $task->completed_at = null;
+    $task->save();
+    
+    return redirect()->route('tasks.index')->with('success', 'Task restored successfully.');
+}
 }
