@@ -341,7 +341,7 @@
                 <a href="javascript:history.back()" class="btn btn-back">
                     <i class="fas fa-arrow-left"></i> Back
                 </a>
-                
+                <br>
                 <h1 class="form-title">Create New Task</h1>
                 
                 <form action="<?php echo e(route('task.store'), false); ?>" method="POST">

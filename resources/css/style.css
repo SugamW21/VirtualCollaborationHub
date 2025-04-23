@@ -69,8 +69,8 @@
 }
 
 .notification {
-    background: white;
-    color: var(--text-primary);
+    background: rgb(217, 255, 0);
+    color: black;
     padding: 1rem;
     margin-bottom: 0.75rem;
     border-radius: var(--radius-md);
@@ -290,7 +290,7 @@
 
 .distance-user-chat h1 {
   background-color: white;
-  color: var(--text-primary);
+  color: black;
   border-top-left-radius: 0;
 }
 
@@ -488,7 +488,7 @@ member css */
     align-items: center;
     font-size: 0.75rem;
     margin-top: 0.25rem;
-    color: var(--text-secondary);
+    color: rgb(0, 4, 253);
   }
   .current-user-chat .user-data {
     justify-content: flex-end;

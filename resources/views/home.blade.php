@@ -599,7 +599,7 @@
                     @foreach ([
                         ['title' => '📩 Chatroom', 'desc' => 'Start private conversations with team members and clients.', 'feature' => 'chatroom', 'link' => route('dashboard'), 'linkText' => 'Go to Chatroom', 'color' => 'from-purple-500 to-indigo-600', 'icon' => 'M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z'],
                         ['title' => '🆕 Create Group', 'desc' => 'Create new groups for team collaboration and project management.', 'feature' => 'create-group', 'link' => route('groups'), 'linkText' => 'Create Group', 'color' => 'from-green-500 to-emerald-600', 'icon' => 'M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z'],
-                        ['title' => '👥 Group Chat', 'desc' => 'Collaborate with your team members in real-time group discussions.', 'feature' => 'group-chat', 'link' => route('meetings.meeting'), 'linkText' => 'Open Group Chat', 'color' => 'from-blue-500 to-cyan-600', 'icon' => 'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z'],
+                        ['title' => '👥 Group Chat', 'desc' => 'Collaborate with your team members in real-time group discussions.', 'feature' => 'group-chat', 'link' => route('groupChats'), 'linkText' => 'Open Group Chat', 'color' => 'from-blue-500 to-cyan-600', 'icon' => 'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z'],
                         ['title' => '🎥 Meetings', 'desc' => 'Start or join video meetings with HD quality and screen sharing.', 'feature' => 'meetings', 'link' => route('meetings.meeting'), 'linkText' => 'Start Meeting', 'color' => 'from-red-500 to-pink-600', 'icon' => 'M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z'],
                         ['title' => '📋 Task Management', 'desc' => 'Create, assign and track project tasks with deadlines and priorities.', 'feature' => 'task-management', 'link' => route('tasks.index'), 'linkText' => 'Manage Tasks', 'color' => 'from-amber-500 to-orange-600', 'icon' => 'M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01'],
                         ['title' => '⚙️ Profile & Settings', 'desc' => 'Customize your account settings and manage your profile details.', 'feature' => 'profile-settings', 'link' => route('profile.edit'), 'linkText' => 'Edit Profile', 'color' => 'from-gray-600 to-gray-800', 'icon' => 'M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z M15 12a3 3 0 11-6 0 3 3 0 016 0z'],
@@ -676,9 +676,9 @@
                             <div class="col-span-3 bg-white/10 backdrop-blur-md rounded-xl p-6 border border-white/10">
                                 <p class="text-gray-300 text-center">No feedback available yet. Be the first to leave a review!</p>
                                 <div class="mt-4 flex justify-center">
-                                    <button class="px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg text-white font-medium hover:from-purple-600 hover:to-pink-600 transition-all duration-300 transform hover:scale-105">
+                                    <a href="{{ route('feedbackandrating') }}" class="px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg text-white font-medium hover:from-purple-600 hover:to-pink-600 transition-all duration-300 transform hover:scale-105">
                                         Leave a Review
-                                    </button>
+                                    </a>
                                 </div>
                             </div>
                         @endforelse
@@ -828,7 +828,7 @@
                     const featureLinks = {
                         chatroom: "{{ route('dashboard') }}",
                         "create-group": "{{ route('groups') }}",
-                        "group-chat": "{{ route('meetings.meeting') }}",
+                        "group-chat": "{{ route('groupChats') }}",
                         meetings: "{{ route('meetings.meeting') }}",
                         "task-management": "{{ route('tasks.index') }}",
                         "profile-settings": "{{ route('profile.edit') }}"

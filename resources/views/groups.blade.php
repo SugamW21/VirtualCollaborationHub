@@ -831,9 +831,7 @@ input[type='text'], input[type='number'], input[type='file'] {
               </div>
               <h3>No Groups Found</h3>
               <p>Create your first group to get started</p>
-              <button type="button" class="btn btn-primary mt-3" data-toggle="modal" data-target="#createGroupModal">
-                  <i class="fa fa-plus btn-icon"></i> Create Group
-              </button>
+              
           </div>
       @endif
   </div>
